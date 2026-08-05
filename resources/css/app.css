@@ -1,9 +1,149 @@
 @import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --color-dark-bg: #080808;
+    --color-dark-surface: #0d0d0d;
+    --color-dark-card: #121212;
+    --color-dark-border: #222222;
+    --color-dark-muted: #1a1a1a;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: #080808;
+    color: #f3f4f6;
+    font-family: var(--font-sans);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+}
+
+/* Hide scrollbar for carousel */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Custom Glassmorphism & Micro-animations */
+.glass-navbar {
+    background: rgba(13, 13, 13, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+    background: rgba(18, 18, 18, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(26, 26, 26, 0.85);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9), 0 0 30px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Continuous Monochrome Wave Shimmer Animation */
+@keyframes textShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.animate-shimmer-monochrome {
+    background: linear-gradient(
+        90deg, 
+        #ffffff 0%, 
+        #ffffff 35%, 
+        #888888 50%, 
+        #ffffff 65%, 
+        #ffffff 100%
+    );
+    background-size: 200% auto;
+    color: #000;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShimmer 4s linear infinite;
+    transition: all 0.3s ease;
+}
+
+.animate-shimmer-monochrome:hover {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+    filter: brightness(1.25);
+}
+
+/* Staggered Slide-Up & Fade-In Keyframe */
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* Interactive Hover Letter Shift Effect */
+.interactive-letter {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease, filter 0.25s ease;
+}
+
+.interactive-letter:hover {
+    transform: translateY(-4px) scale(1.08);
+    color: #ffffff;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+}
+
+/* Background Grid Overlay */
+.bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }

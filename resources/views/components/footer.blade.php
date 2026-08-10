@@ -1,37 +1,35 @@
-@props(['profile'])
+@props(['profile' => null])
 
-<footer class="py-12 border-t border-neutral-800/80 bg-[#060606] relative z-10 text-neutral-400">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<footer class="py-12 border-t border-neutral-900 bg-black text-neutral-400">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
             
-            <!-- Left Branding -->
+            <!-- Left Branding with Profile Image Logo -->
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center font-bold text-white tracking-widest text-xs">
-                    {{ $profile['initials'] ?? 'MFH' }}
-                </div>
+                <a href="{{ route('about') }}" class="w-9 h-9 rounded-full border border-neutral-700/80 overflow-hidden flex items-center justify-center bg-neutral-900 shadow-md hover:border-neutral-400 transition-colors">
+                    <img src="{{ asset('images/profile.png') }}" alt="Profile Logo" class="w-full h-full object-cover" />
+                </a>
                 <div class="flex flex-col">
                     <span class="font-bold text-white text-xs tracking-tight">
-                        {{ $profile['name'] }}
+                        {{ $profile['name'] ?? 'Muh Febryant Hidayatullah' }}
                     </span>
-                    <span class="text-[11px] font-mono text-neutral-500">
-                        Full-Stack Developer & UI/UX Designer
+                    <span class="text-[10px] text-neutral-500 font-mono">
+                        {{ $profile['role'] ?? 'Web Developer' }}
                     </span>
                 </div>
             </div>
 
-            <!-- Center Navigation Links -->
-            <div class="flex items-center gap-6 text-xs font-mono">
-                <a href="#home" class="hover:text-white transition-colors">Home</a>
-                <a href="#about" class="hover:text-white transition-colors">About</a>
-                <a href="#skills" class="hover:text-white transition-colors">Skills</a>
-                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
-                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            <!-- Center Multi-Page Links -->
+            <div class="flex items-center gap-6 text-xs">
+                <a href="{{ route('about') }}" class="hover:text-white transition-colors {{ request()->routeIs('about') ? 'text-white font-semibold' : '' }}">About</a>
+                <a href="{{ route('skills') }}" class="hover:text-white transition-colors {{ request()->routeIs('skills') ? 'text-white font-semibold' : '' }}">Skills</a>
+                <a href="{{ route('projects') }}" class="hover:text-white transition-colors {{ request()->routeIs('projects') ? 'text-white font-semibold' : '' }}">Projects</a>
+                <a href="{{ route('contact') }}" class="hover:text-white transition-colors {{ request()->routeIs('contact') ? 'text-white font-semibold' : '' }}">Contact</a>
             </div>
 
-            <!-- Right Copyright & Tech Badge -->
-            <div class="text-right text-xs font-mono text-neutral-500">
-                <p>&copy; {{ date('Y') }} {{ $profile['name'] }}. All rights reserved.</p>
-                <p class="text-[11px] text-neutral-600">Built with Laravel &amp; Tailwind CSS</p>
+            <!-- Right Copyright -->
+            <div class="text-xs text-neutral-500 font-mono text-center md:text-right">
+                <p>&copy; {{ date('Y') }} {{ $profile['name'] ?? 'Muh Febryant Hidayatullah' }}. All rights reserved.</p>
             </div>
 
         </div>

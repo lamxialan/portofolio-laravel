@@ -1,1 +1,1 @@
-@include('portfolio.index')
+@extends('pages.about')

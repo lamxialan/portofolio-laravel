@@ -145,34 +145,26 @@
 <script>
     function absurdTextScramble() {
         return {
-            targetTexts: [
-                'Web Developer',
-                'C0d3 W1z4rd ⚡',
-                'Full-Stack Dev 💻',
-                'P4r4d0x D3v 👾',
-                'Web Developer'
-            ],
+            targetText: '{{ $profile["role"] ?? "Web Developer" }}',
             chars: '!<>-_\\/[]{}—=+^?#________@$%&',
             displayText: '{{ $profile["role"] ?? "Web Developer" }}',
-            currentIndex: 0,
             isGlitching: false,
             
             initScramble() {
                 setInterval(() => {
-                    this.scrambleToNext();
+                    this.scramble();
                 }, 4500);
             },
             
             triggerGlitch() {
                 if (!this.isGlitching) {
-                    this.scrambleToNext();
+                    this.scramble();
                 }
             },
             
-            scrambleToNext() {
+            scramble() {
                 this.isGlitching = true;
-                this.currentIndex = (this.currentIndex + 1) % this.targetTexts.length;
-                const target = this.targetTexts[this.currentIndex];
+                const target = this.targetText;
                 let frame = 0;
                 const maxFrames = 16;
                 

@@ -76,6 +76,27 @@
 </head>
 <body class="bg-black text-neutral-300 antialiased selection:bg-white selection:text-black min-h-screen relative overflow-x-hidden">
 
+    <!-- Initial Screen Preloader (Davin style) -->
+    <div 
+        id="initial-preloader" 
+        class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-all duration-700 ease-out select-none"
+    >
+        <!-- Centered Branding Text -->
+        <div class="mb-5 flex items-center gap-0.5">
+            <span class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Febryant</span>
+            <span class="text-2xl sm:text-3xl font-extrabold text-blue-500 animate-pulse">.</span>
+        </div>
+
+        <!-- Progress Bar Container -->
+        <div class="w-44 sm:w-56 h-1 bg-neutral-900 rounded-full overflow-hidden relative border border-neutral-800/80">
+            <div 
+                id="preloader-progress" 
+                class="h-full bg-gradient-to-r from-blue-600 via-blue-400 to-white rounded-full transition-all duration-150 ease-out shadow-[0_0_10px_rgba(59,130,246,0.8)]" 
+                style="width: 0%"
+            ></div>
+        </div>
+    </div>
+
     <div id="page-wrapper" class="relative z-10 flex flex-col min-h-screen page-transition-wrapper">
         @yield('content')
     </div>
@@ -100,9 +121,32 @@
         </button>
     </div>
 
-    <!-- Universal Reveal & Smooth Navigation Transitions -->
+    <!-- Universal Reveal, Preloader & Smooth Navigation Transitions -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Initial Access Preloader Animation
+            const preloader = document.getElementById('initial-preloader');
+            const progressBar = document.getElementById('preloader-progress');
+            
+            if (preloader && progressBar) {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.floor(Math.random() * 14) + 8;
+                    if (progress > 100) progress = 100;
+                    progressBar.style.width = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            preloader.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+                            setTimeout(() => {
+                                preloader.remove();
+                            }, 700);
+                        }, 250);
+                    }
+                }, 60);
+            }
+
             // Reveal on Scroll Observer
             const observerOptions = {
                 root: null,

@@ -151,9 +151,7 @@
             isGlitching: false,
             
             initScramble() {
-                setInterval(() => {
-                    this.scramble();
-                }, 4500);
+                // Animation triggers exclusively on cursor hover
             },
             
             triggerGlitch() {

@@ -124,27 +124,33 @@
     <!-- Universal Reveal, Preloader & Smooth Navigation Transitions -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial Access Preloader Animation
+            // Initial Access Preloader Animation (SessionStorage Check: Run Only Once Per Session)
             const preloader = document.getElementById('initial-preloader');
             const progressBar = document.getElementById('preloader-progress');
             
             if (preloader && progressBar) {
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += Math.floor(Math.random() * 14) + 8;
-                    if (progress > 100) progress = 100;
-                    progressBar.style.width = progress + '%';
-                    
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            preloader.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+                if (!sessionStorage.getItem('hasSeenFebryantPreloader')) {
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += Math.floor(Math.random() * 14) + 8;
+                        if (progress > 100) progress = 100;
+                        progressBar.style.width = progress + '%';
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            sessionStorage.setItem('hasSeenFebryantPreloader', 'true');
                             setTimeout(() => {
-                                preloader.remove();
-                            }, 700);
-                        }, 250);
-                    }
-                }, 60);
+                                preloader.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+                                setTimeout(() => {
+                                    preloader.remove();
+                                }, 700);
+                            }, 250);
+                        }
+                    }, 60);
+                } else {
+                    // Already seen in current session -> remove instantly
+                    preloader.remove();
+                }
             }
 
             // Reveal on Scroll Observer

@@ -12,9 +12,21 @@
                     I am {{ $profile['name'] ?? 'Muh Febryant Hidayatullah' }}
                 </span>
 
-                <!-- Main Heading -->
-                <h1 class="text-4xl sm:text-6xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-6">
-                    {{ $profile['role'] ?? 'Web Developer' }}
+                <!-- Main Heading with Absurd Glitch Scramble Animation -->
+                <h1 
+                    x-data="absurdTextScramble()" 
+                    x-init="initScramble()"
+                    @mouseenter="triggerGlitch()"
+                    class="text-4xl sm:text-6xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-6 cursor-pointer select-none min-h-[1.2em] flex items-center"
+                    title="Click or Hover for Absurd Glitch Scramble!"
+                >
+                    <span 
+                        x-text="displayText" 
+                        :class="{ 'absurd-glitch': isGlitching }"
+                        class="inline-block transition-all duration-150"
+                    >
+                        {{ $profile['role'] ?? 'Web Developer' }}
+                    </span>
                 </h1>
 
                 <!-- Subtitle / Paragraph -->
@@ -22,13 +34,11 @@
                     {{ $profile['tagline'] ?? 'Blending thoughtful UI design with clean, responsive development to create websites that look great and perform flawlessly.' }}
                 </p>
 
-
-
                 <!-- Social Icons -->
                 <div class="flex items-center gap-5 text-neutral-400">
                     <!-- Discord -->
                     <a 
-                        href="{{ $profile['discord'] ?? 'https://discord.com' }}" 
+                        href="{{ $profile['discord'] ?? 'https://discord.com/users/1261197671952154658' }}" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="hover:text-white transition-colors p-1"
@@ -41,7 +51,7 @@
                     
                     <!-- GitHub -->
                     <a 
-                        href="{{ $profile['github'] ?? 'https://github.com' }}" 
+                        href="{{ $profile['github'] ?? 'https://github.com/lamxialan' }}" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="hover:text-white transition-colors p-1"
@@ -54,7 +64,7 @@
 
                     <!-- Instagram -->
                     <a 
-                        href="{{ $profile['instagram'] ?? 'https://instagram.com' }}" 
+                        href="{{ $profile['instagram'] ?? 'https://www.instagram.com/sel4njutnya?igsh=MWViZWtidWlnNnIxbw==' }}" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="hover:text-white transition-colors p-1"
@@ -67,7 +77,7 @@
 
                     <!-- TikTok -->
                     <a 
-                        href="{{ $profile['tiktok'] ?? 'https://tiktok.com' }}" 
+                        href="{{ $profile['tiktok'] ?? 'https://tiktok.com/@candoskiii' }}" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="hover:text-white transition-colors p-1"
@@ -81,15 +91,14 @@
 
             </div>
 
-            <!-- Right Grayscale Profile Photo (5 Columns) -->
+            <!-- Right Profile Image (5 Columns) -->
             <div class="lg:col-span-5 flex justify-center lg:justify-end">
                 <div class="relative group max-w-sm w-full">
-                    <!-- Photo Container -->
-                    <div class="overflow-hidden rounded-3xl border border-neutral-800 bg-[#0d0d0d] shadow-2xl">
+                    <div class="overflow-hidden rounded-3xl border border-neutral-800 bg-[#0d0d0d] shadow-2xl p-4 flex items-center justify-center">
                         <img 
                             src="{{ asset($profile['profile_image'] ?? 'images/profile.png') }}" 
                             alt="Profile Photo" 
-                            class="w-full h-[420px] object-cover hover:scale-105 transition-all duration-700 ease-out"
+                            class="w-full h-[380px] object-contain group-hover:scale-105 transition-all duration-700 ease-out"
                         />
                     </div>
                 </div>
@@ -98,3 +107,96 @@
         </div>
     </div>
 </section>
+
+<!-- Absurd Glitch & Text Scramble Styling & Logic -->
+<style>
+    @keyframes absurdGlitchAnim {
+        0% {
+            text-shadow: 3px 0 #ff0055, -3px 0 #00e5ff;
+            transform: translate(0);
+        }
+        20% {
+            text-shadow: -3px 0 #ff0055, 3px 0 #00e5ff;
+            transform: translate(-3px, 1px);
+        }
+        40% {
+            text-shadow: 3px 0 #ff0055, -3px 0 #00e5ff;
+            transform: translate(3px, -1px);
+        }
+        60% {
+            text-shadow: -2px 0 #ff0055, 2px 0 #00e5ff;
+            transform: translate(-1px, 2px);
+        }
+        80% {
+            text-shadow: 2px 0 #ff0055, -2px 0 #00e5ff;
+            transform: translate(1px, -2px);
+        }
+        100% {
+            text-shadow: none;
+            transform: translate(0);
+        }
+    }
+    .absurd-glitch {
+        animation: absurdGlitchAnim 0.35s ease infinite alternate;
+        color: #ffffff !important;
+    }
+</style>
+
+<script>
+    function absurdTextScramble() {
+        return {
+            targetTexts: [
+                'Web Developer',
+                'C0d3 W1z4rd ⚡',
+                'Full-Stack Dev 💻',
+                'P4r4d0x D3v 👾',
+                'Web Developer'
+            ],
+            chars: '!<>-_\\/[]{}—=+^?#________@$%&',
+            displayText: '{{ $profile["role"] ?? "Web Developer" }}',
+            currentIndex: 0,
+            isGlitching: false,
+            
+            initScramble() {
+                setInterval(() => {
+                    this.scrambleToNext();
+                }, 4500);
+            },
+            
+            triggerGlitch() {
+                if (!this.isGlitching) {
+                    this.scrambleToNext();
+                }
+            },
+            
+            scrambleToNext() {
+                this.isGlitching = true;
+                this.currentIndex = (this.currentIndex + 1) % this.targetTexts.length;
+                const target = this.targetTexts[this.currentIndex];
+                let frame = 0;
+                const maxFrames = 16;
+                
+                const timer = setInterval(() => {
+                    frame++;
+                    let result = '';
+                    for (let i = 0; i < target.length; i++) {
+                        if (i < Math.floor((frame / maxFrames) * target.length)) {
+                            result += target[i];
+                        } else if (target[i] === ' ') {
+                            result += ' ';
+                        } else {
+                            result += this.chars[Math.floor(Math.random() * this.chars.length)];
+                        }
+                    }
+                    this.displayText = result;
+                    
+                    if (frame >= maxFrames) {
+                        clearInterval(timer);
+                        this.displayText = target;
+                        setTimeout(() => { this.isGlitching = false; }, 300);
+                    }
+                }, 35);
+            }
+        }
+    }
+</script>

@@ -85,7 +85,7 @@ class PortfolioController extends Controller
                 'short_desc' => 'Bot Discord serbaguna yang dirancang untuk otomasi server, manajemen role interaktif, sistem moderasi, dan peningkatan engagement anggota komunitas.',
                 'tags' => ['JavaScript', 'Node.js', 'Discord.js', 'Automation'],
                 'image' => asset('images/rolise-bot.png'),
-                'demo_url' => 'https://discord.com',
+                'demo_url' => 'https://github.com/lamxialan/Rolise-bot',
                 'github_url' => 'https://github.com/lamxialan/Rolise-bot',
             ],
             [
